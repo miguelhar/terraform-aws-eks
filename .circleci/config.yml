@@ -40,7 +40,10 @@ workflows:
   version: 2
   deploy-workflow:
     jobs:
-      - deploy
+      - deploy:
+          filters:
+            tags:
+              ignore: /^v.*/
   test-upgrade-workflow:
     jobs:
       - test-upgrade:
