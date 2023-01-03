@@ -18,8 +18,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "Running deploy job"
+          name: "Deploy job"
+          command: "echo Running deploy job"
   test-upgrade:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -30,8 +30,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Say hello"
-          command: "Running test-upgrade"
+          name: "Test upgrade job"
+          command: "echo Running test-upgrade"
 
 
 # Invoke jobs via workflows
@@ -47,3 +47,5 @@ workflows:
           filters:
             tags:
               only: /^v.*/
+            branches:
+              ignore: /.*/
