@@ -32,16 +32,13 @@ jobs:
       - terraform/install:
           terraform_version: '1.3.6'
       - run:
-          name: "Get previous release"
+          name: "Provision using previous release"
+          working_directory: tests
           command: |
             previous_tag="$(git describe --tags --abbrev=0 --first-parent ${CIRCLE_TAG}^)"
             echo "Checking out previous tag: $previous_tag"
             git checkout "tags/${previous_tag}"
-      - run:
-          name: "Provision using previous release"
-          working_directory: tests
-          command: |
-            export TF_VAR_tag="$(git describe --tags --abbrev=0 --first-parent ${CIRCLE_TAG}^)"
+            export TF_VAR_tag="${previous_tag}"
             terraform init
             terraform validate
             terraform apply --auto-approve
@@ -50,16 +47,10 @@ jobs:
           command: |
             echo "Checking out current tag: ${CIRCLE_TAG}"
             git checkout "tags/${CIRCLE_TAG}"
-      - run:
-          name: "Provision using current release"
-          working_directory: tests
-          command: |
             export TF_VAR_tag="${CIRCLE_TAG}"
             terraform init --reconfigure --upgrade
             terraform validate
             terraform apply --auto-approve
-
-
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
