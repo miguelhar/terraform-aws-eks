@@ -1,7 +1,7 @@
 variable "tag" {
-  default = "tag A"
+  default = "v0.0.0"
 }
 
 output "tag" {
-  value = var.test
+  value = var.tag
 }
