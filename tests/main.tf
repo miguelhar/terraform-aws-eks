@@ -1,7 +1,7 @@
-variable "test" {
+variable "tag" {
   default = "tag A"
 }
 
-output "test" {
+output "tag" {
   value = var.test
 }
