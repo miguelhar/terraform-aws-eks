@@ -43,12 +43,12 @@ workflows:
       - deploy:
           filters:
             tags:
-              ignore: /.*/
+              ignore: /^v.*/
   test-upgrade-workflow:
     jobs:
       - test-upgrade:
           filters:
             tags:
-              only: /.*/
+              only: /^v.*/
             branches:
               ignore: /.*/
