@@ -35,7 +35,7 @@ jobs:
           name: "Provision using previous release"
           working_directory: tests
           command: |
-            previous_tag="$(git describe --tags --abbrev=0 --first-parent ${CIRCLE_TAG}^)"
+            previous_tag="$(git tag --list 'v*' | grep -B 1 ${CIRCLE_TAG} | head -1)"
             echo "Checking out previous tag: $previous_tag"
             git checkout "tags/${previous_tag}"
             export TF_VAR_tag="${previous_tag}"
@@ -43,7 +43,8 @@ jobs:
             terraform validate
             terraform apply --auto-approve
       - run:
-          name: "Get current release"
+          name: "Provision using current release"
+          working_directory: tests
           command: |
             echo "Checking out current tag: ${CIRCLE_TAG}"
             git checkout "tags/${CIRCLE_TAG}"
