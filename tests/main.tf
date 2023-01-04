@@ -2,7 +2,7 @@ variable "tag" {
   default = "v0.0.0"
 }
 variable "release" {
-  value = "release 1"
+  default = "release 1"
 }
 
 output "tag" {
