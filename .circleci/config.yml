@@ -76,14 +76,12 @@ jobs:
 workflows:
   version: 2
   deploy-workflow:
+    when:
+      equal: ["deploy", << pipeline.parameters.GHA_Action >> ]
     jobs:
-      - deploy:
-          filters:
-            tags:
-              ignore: /^v.*/
+      - deploy
   test-upgrade-workflow:
     when:
-      equal: ["test-upgrade-workflow", << pipeline.parameters.GHA_Event >> ]
+      equal: ["test-upgrade-workflow", << pipeline.parameters.GHA_Action >> ]
     jobs:
       - test-upgrade
-# equal: [ "release", << pipeline.parameters.GHA_Event >> ]
