@@ -31,7 +31,7 @@ jobs:
       - run:
           name: "Deploy job"
           command: |
-            "echo Running deploy job"
+            echo Running deploy job
             echo GHA_Action << pipeline.parameters.GHA_Action >>
             echo GHA_Event << pipeline.parameters.GHA_Event >>
             echo GHA_Actor << pipeline.parameters.GHA_Actor >>
