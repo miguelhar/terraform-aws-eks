@@ -1,0 +1,21 @@
+# We need to use github actions to trigger circleci vcluster_install_destroy workflow
+# on pull request (creation and updates) as it is not natively supported by circleci.
+# https://circleci.canny.io/cloud-feature-requests/p/trigger-new-build-when-a-pull-request-is-opened
+# The vcluster_install_destroy workflow is triggered when the 'workflow' parameter is equal to 'vcluster_install_destroy'.
+
+name: Trigger CircleCI
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, assigned, edited]
+  # release:
+  #   types: [published]
+jobs:
+  trigger-circleci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test-Module-Upgrade
+        id: test-upgrade-workflow
+        uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0
+        env:
+          CCI_TOKEN: ${{ secrets.CIRCLE_PERSONAL_TOKEN }}
