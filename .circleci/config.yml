@@ -1,11 +1,7 @@
 # Use the latest 2.1 version of CircleCI pipeline process engine.
 # See: https://circleci.com/docs/2.0/configuration-reference
-version: 2.1
-##
-# The config will be executed on each pull_request update due to the GitHub Workflow.
-# Each push will also trigger the config, due to default CircleCI's behavior.
-##
 
+version: 2.1
 parameters:
   GHA_Actor:
     type: string
@@ -16,10 +12,6 @@ parameters:
   GHA_Event:
     type: string
     default: ""
-  GHA_Meta:
-    type: string
-    default: ""
-
 
 orbs:
   terraform: circleci/terraform@3.2.0
@@ -38,7 +30,11 @@ jobs:
       - checkout
       - run:
           name: "Deploy job"
-          command: "echo Running deploy job"
+          command: |
+            "echo Running deploy job"
+            echo GHA_Action << pipeline.parameters.GHA_Action >>
+            echo GHA_Event << pipeline.parameters.GHA_Event >>
+            echo GHA_Actor << pipeline.parameters.GHA_Actor >>
   test-upgrade:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -86,7 +82,8 @@ workflows:
             tags:
               ignore: /^v.*/
   test-upgrade-workflow:
-    when: << pipeline.parameters.GHA_Action >>
+    when:
+      equal: ["test-upgrade-workflow", << pipeline.parameters.GHA_Event >> ]
     jobs:
       - test-upgrade
 # equal: [ "release", << pipeline.parameters.GHA_Event >> ]
