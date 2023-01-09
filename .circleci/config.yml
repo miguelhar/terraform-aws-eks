@@ -70,9 +70,6 @@ jobs:
           command: |
             echo "GHA_Action << pipeline.parameters.GHA_Action >>"
             echo "GHA_Event << pipeline.parameters.GHA_Event >>"
-            previous_tag="$(git tag --list 'v*' | grep -B 1 ${CIRCLE_TAG} | head -1)"
-            echo "Checking out previous tag: $previous_tag"
-            git checkout "tags/${previous_tag}"
             export TF_VAR_tag="${previous_tag}"
             terraform init
             terraform validate
@@ -83,7 +80,6 @@ jobs:
           command: |
             echo "GHA"
             echo "Checking out current tag: ${CIRCLE_TAG}"
-            git checkout "tags/${CIRCLE_TAG}"
             export TF_VAR_tag="${CIRCLE_TAG}"
             terraform init --reconfigure --upgrade
             terraform validate
