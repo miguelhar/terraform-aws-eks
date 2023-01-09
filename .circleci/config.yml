@@ -28,6 +28,13 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       - image: cimg/base:stable
+
+    parameters:
+      workspace:
+        type: string
+        default: circleci-<< pipeline.number >>
+      terraform_version:
+        type: string
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
@@ -44,6 +51,13 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
       - image: cimg/aws:2022.09
+
+    parameters:
+      workspace:
+        type: string
+        default: circleci-<< pipeline.number >>
+      terraform_version:
+        type: string
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
