@@ -11,10 +11,10 @@ jobs:
         id: test-deploy-workflow
         uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.6
         env:
-          CCI_TOKEN: ${{ secrets.CIRCLE_PROJECT_TOKEN }}
+          CCI_TOKEN: ${{ secrets.CIRCLE_PERSONAL_TOKEN }}
       - name: Test-Module-Upgrade
         id: test-upgrade-workflow
         uses: CircleCI-Public/trigger-circleci-pipeline-action@v1.0.6
         env:
-          CCI_TOKEN: ${{ secrets.CIRCLE_PROJECT_TOKEN }}
+          CCI_TOKEN: ${{ secrets.CIRCLE_PERSONAL_TOKEN }}
 
