@@ -19,7 +19,7 @@ orbs:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  deploy:
+  test-deploy-workflow:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -35,7 +35,7 @@ jobs:
             echo GHA_Action << pipeline.parameters.GHA_Action >>
             echo GHA_Event << pipeline.parameters.GHA_Event >>
             echo GHA_Actor << pipeline.parameters.GHA_Actor >>
-  test-upgrade:
+  test-upgrade-workflow:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -73,15 +73,17 @@ jobs:
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+
 workflows:
-  version: 2
-  deploy-workflow:
+  test-deploy-workflow:
     when:
-      equal: ["deploy", << pipeline.parameters.GHA_Action >> ]
+      equal: ["test-deploy-workflow", << pipeline.parameters.GHA_Action >> ]
     jobs:
-      - deploy
+      - test-deploy:
+          terraform_version: << pipeline.parameters.terraform_version >>
   test-upgrade-workflow:
     when:
       equal: ["test-upgrade-workflow", << pipeline.parameters.GHA_Action >> ]
     jobs:
-      - test-upgrade
+      - test-upgrade:
+          terraform_version: << pipeline.parameters.terraform_version >>
