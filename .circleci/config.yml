@@ -23,7 +23,7 @@ orbs:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  test-deploy-workflow:
+  test-deploy:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
@@ -39,7 +39,7 @@ jobs:
             echo GHA_Action << pipeline.parameters.GHA_Action >>
             echo GHA_Event << pipeline.parameters.GHA_Event >>
             echo GHA_Actor << pipeline.parameters.GHA_Actor >>
-  test-upgrade-workflow:
+  test-upgrade:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
